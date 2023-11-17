@@ -1,3 +1,69 @@
+class NodoB:
+    def __init__(self, folha=True):
+        self.folha = folha
+        self.chaves = []
+        self.filhos = []
+
+-->class NodoB: Defini uma classe NodoB, que recebe como parâmetro o self e folha=True, que é um parâmetro, que por padrão é True. 
+-->self.folha: Atributo que define se o nó é folha ou não.
+-->self.chaves: Atributo que define as chaves do nó.
+-->self.filhos: Atributo que define os filhos do nó. 
+
+class ArvoreB:
+    def __init__(self, ordem):
+        self.raiz = NodoB(folha=True)
+        self.ordem = ordem
+
+--> class ArvoreB: Defini uma classe ArvoreB, que recebe como parâmetro o self e a ordem da árvore b.
+--> self.raiz: Atributo que define a raíz da árvore b.
+--> self.ordem: Atributo que define a ordem da árvore b.
+
+def busca(self, k, x=None):
+    if isinstance(x, NodoB):
+        i = 0
+        while i < len(x.chaves) and k > x.chaves[i]:
+            i += 1
+        if i < len(x.chaves) and k == x.chaves[i]:
+            return (x, i)
+        elif x.folha:
+            return None
+        else:
+            return self.busca(k, x.filhos[i])
+    else:
+        return self.busca(k, self.raiz)
+--> Função que busca uma chave na árvore b. Recebe como parâmetro o k = chave e o x = nó atual. Se o x for uma instância de NodoB, ele entra no bloco if isinstance(x, NodoB): e define o i = 0. Enquanto i for menor que o tamanho das chaves do nó atual e a chave for maior que a chave do nó atual, ele soma + 1 no i. Se i for menor que o tamanho das chaves do nó atual e a chave for igual a chave do nó atual, ele retorna o nó atual e o índice. Se o nó atual for folha, ele retorna None. Se não, ele retorna a função busca passando como parâmetro a chave e o filho do nó atual. Se não for uma instância de NodoB, ele retorna a função busca passando como parâmetro a chave e a raíz da árvore b.
+--> A função busca é recursiva, pois ela chama a si mesma, até que encontre a chave ou retorne None.
+
+def insere(self, k):
+    r = self.raiz
+    if len(r.chaves) == (2 * self.ordem) - 1:
+        s = NodoB()
+        self.raiz = s
+        s.filhos.insert(0, r)
+        self.dividir_filho(s, 0)
+        self.insere_nao_completo(s, k)
+    else:
+        self.insere_nao_completo(r, k)
+--> Função que insere uma chave na árvore b. Recebe como parâmetro o k = chave. Atribui a variável r a raíz da árvore b. Se o tamanho das chaves da raíz for igual a 2 * a ordem da árvore b - 1, ele entra no bloco if len(r.chaves) == (2 * self.ordem) - 1: e faz uma instância de NodoB, alocando na variável s. A raíz da árvore b recebe o valor de s. Insere o nó r como filho do nó s na posição 0. Chama a função dividir_filho passando como parâmetro o nó s e o índice 0. Chama a função insere_nao_completo passando como parâmetro o nó s e a chave. Se não, ele chama a função insere_nao_completo passando como parâmetro o nó r e a chave.
+
+def insere_nao_completo(self, x, k):
+    i = len(x.chaves) - 1
+    if x.folha:
+        x.chaves.append(0)
+        while i >= 0 and k < x.chaves[i]:
+            x.chaves[i + 1] = x.chaves[i]
+            i -= 1
+        x.chaves[i + 1] = k
+    else:
+        while i >= 0 and k < x.chaves[i]:
+            i -= 1
+        i += 1
+        if len(x.filhos[i].chaves) == (2 * self.ordem) - 1:
+            self.dividir_filho(x, i)
+            if k > x.chaves[i]:
+                i += 1
+        self.insere_nao_completo(x.filhos[i], k)
+--> Função que insere uma chave na árvore b, quando o nó não está cheio. Recebe como parâmetro o x = nó atual e o k = chave. Atribui a variável i o tamanho das chaves do nó atual - 1. Se o nó atual for folha: Insere a chave na posição 0 do nó atual. Enquanto i for maior ou igual a 0 e a chave for menor que a chave do nó atual, ele entra no looping e soma - 1 no i. A chave da posição i + 1 recebe a chave da posição i. Soma - 1 no i. A chave da posição i + 1 recebe a chave. Se não, ele entra no looping e soma - 1 no i. Soma + 1 no i. Se o tamanho das chaves do filho do nó atual na posição i for igual a 2 * a ordem da árvore b - 1, ele entra no bloco if len(x.filhos[i].chaves) == (2 * self.ordem) - 1: e chama a função dividir_filho passando como parâmetro o nó atual e o índice i. Se a chave for maior que a chave do nó atual na posição i, ele soma + 1 no i. Chama a função insere_nao_completo passando como parâmetro o filho do nó atual na posição i e a chave.
 
 def mostra_arvore(self):
       self._mostra_arvore(self.raiz)
@@ -15,3 +81,39 @@ def _mostra_arvore(self, nodo, nivel=0):
                 for filho in nodo.filhos:
                     self._mostra_arvore(filho, nivel)
 Voltando ao contador de nível, como citado acima: Vai somar 1 no nível, e pra cada filho do nó, chama a função de novo e passa o nodo filho como parâmetro, junto do nível dele. Ele entra nesse looping, até que seja um nó folha. 
+
+def dividir_filho(self, x, i):
+--> Responsável por dividir o nodo em dois quando o número de chaves for maior do que o definido pela ordem. Recebe como parâmetro o x = nó pai e o i = índice do filho que deve ser dividido.
+        t = self.ordem
+        y = x.filhos[i]
+        z = NodoB(folha=y.folha)
+Recebe a ordem da árvore b, alocando na variável t o valor do parâmetro ordem. Na variável i, aloca o filho específico. Na variável faz uma instância de NodoB, para criar um novo nodo, pra receber as chaves que sobraram do nó pai.
+        x.filhos.insert(i + 1, z)
+        x.chaves.insert(i, y.chaves[t - 1])
+        z.chaves = y.chaves[t:]
+        y.chaves = y.chaves[:t - 1]
+Insere o nó z, como um novo filho do nó pai na posição após o filho y, que está sendo dividido.
+Insere a chave da posição do meio do nodo, na posição t-1, no nó pai.
+As chaves que ficam pra fora da capacidade do nodo, são movidas pro nó z.
+Mantém no nó y, as chaves que cabem nela, ou seja até o tamanho t-1.
+          if not y.folha:
+            z.filhos = y.filhos[t:]
+            y.filhos = y.filhos[:t]
+Se tem filho, e não é um nó folha: Os filhos que correspondem as chaves movidas pra z são atribuídas no nó z. Como feito em cima, só que com os filhos. Assim, como a linha debaixo que é responsável por manter os que cabem
+
+
+Exemplo de execução:
+
+if __name__ == "__main__":
+-->entra no if, pois o nome do módulo é igual ao nome do módulo principal.
+    arvore_b = ArvoreB(ordem=2)
+--> Cria uma instância de ArvoreB, alocando na variável arvore_b, passando como parâmetro a ordem da árvore b.
+    chaves = [3, 7, 1, 5, 9, 2, 8, 4, 6]
+--> Cria uma lista de chaves.
+    for chave in chaves:
+        arvore_b.insere(chave)
+--> Realiza um for de cada chave na lista de chaves, ele chama a função insere passando como parâmetro a chave.
+    print("\nÁrvore B:")
+    arvore_b.mostra_arvore()
+--> Imprime a árvore b, chamando a função mostra_arvore.
+
