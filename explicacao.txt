@@ -117,3 +117,11 @@ if __name__ == "__main__":
     arvore_b.mostra_arvore()
 --> Imprime a árvore b, chamando a função mostra_arvore.
 
+Remoção:
+
+Quando é removido um elemento de um nó, e este nó ficar com menos do que número minímo de elementos, realizará a Redistribuição ou a Contatenação.
+Se realiza a Redistribuição quando um dos filhos adjacentes tiver mais que o minímo de elementos.
+Se realiza a Concatenação quando os filhos adjacentes tiver apenas o mínimo de elementos.
+Redistribuição: Juntar o nó adjacente, o pai do nó adjacente, e os elementos restantes do nó que estava com menos que o minímo de elementos,
+E fazer a divisão deste novo nó, gerando um novo pai para este nó
+Concatenação  : Juntar o nó adjacente, o pai do nó adjacente, e os elementos restante do nó que estava com menos que o minímo de elementos.
